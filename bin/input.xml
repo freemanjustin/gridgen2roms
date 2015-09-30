@@ -1,0 +1,30 @@
+<grid>
+
+    <params>
+        <!--// Latitude  (degrees) of the bottom-left corner of the grid.-->
+        <corner_lat>44.8125</corner_lat>
+        <!-- // Longitude (degrees) of the bottom-left corner of the grid.  -->
+        <corner_lon>-62.8855</corner_lon>
+        <!-- // Width of domain (meters) -->
+        <width>9100.0</width>
+        <!-- // Length of domain (meters) -->
+        <length>2550.0</length>
+        <!-- // Angle (degrees) to rotate the grid conterclock-wise -->
+        <angle>-40.0</angle>
+        <!-- // Cell width and height (i.e. Resolution)in meters. Grid cells are forced to be (almost) square. -->
+        <resolution>100.0</resolution>
+        <!-- // Number of vertical levels -->
+        <vertical_levels>10</vertical_levels>
+    </params>
+
+    <!-- bathymetry -->
+    <bathymetry>
+        <filename>aust_bathy.nc</filename>
+        <lat_coord>lat</lat_coord>
+        <lon_coord>lon</lon_coord>
+        <field>z</field>
+        <!--filter_bathymetry>no</filter_bathymetry-->
+        <min_depth>5.0</min_depth>
+    </bathymetry>
+
+</grid>
