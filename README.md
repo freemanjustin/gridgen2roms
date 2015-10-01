@@ -47,7 +47,7 @@ If you are using the web app included in the source distribution then save the o
 148.2 -23.25 
 ```
 
-*Note* that I have omitted the last coordinate reported by the web app since it is a duplicate.
+**Note** that I have omitted the last coordinate reported by the web app since it is a duplicate.
 
 ## beta values
 We need to add some additional information to the polygon points to include and extra parameter required by `gridgen-c`. This parameter is referred to as `beta` and it defines angles of the polygons corners. The sum of `beta` must always equal 4. For the simple grid defined by the polygon above, we will prescribe the following beta values
