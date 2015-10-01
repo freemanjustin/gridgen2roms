@@ -1,0 +1,9 @@
+input polygon_points.txt
+output polygon.grid
+nnodes 14
+nx 32 
+ny 10
+precision 1.0e-6
+sigmas sigmas.0
+rectangle rect.0
+newton 1

@@ -1,0 +1,9 @@
+<grid>
+    <bathymetry>
+        <filename>etopo1.nc</filename>
+        <lat_coord>lat</lat_coord>
+        <lon_coord>lon</lon_coord>
+        <field>z</field>
+        <min_depth>5.0</min_depth>
+    </bathymetry>
+</grid>
