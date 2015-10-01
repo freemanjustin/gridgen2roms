@@ -28,7 +28,7 @@ Double click to finish editing the polygon. Once editing is complete, the list o
 
 
 # How to make a roms grid with `gridgen2roms`
-This example will take you through the steps requires to generate a grid that may be used with roms.
+This example will take you through the steps to generate a roms grid.
 
 ## Polygon Definition
 
