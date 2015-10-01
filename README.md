@@ -8,7 +8,7 @@ ROMS grid generation via `gridgen`.
 
 * [netCDF-C](http://www.unidata.ucar.edu/software/netcdf/)
 * [gridgen-c](https://github.com/sakov/gridgen-c)
-* [gridutils](https://github.com/sakov/gridutils-c)
+* [gridutils-c](https://github.com/sakov/gridutils-c)
 * [libXML2](http://www.xmlsoft.org/)
 * Bathymetry data in netcdf format 
 
