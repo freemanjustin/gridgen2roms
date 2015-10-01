@@ -65,8 +65,8 @@ Our updated `polygon_points.txt` file now looks like this
 input polygon_points.txt
 output polygon.grid
 nnodes 14
-nx 30
-ny 10
+nx 20
+ny 20
 precision 1.0e-6
 sigmas sigmas.0
 rectangle rect.0
@@ -87,9 +87,9 @@ nnodes = 14
 -> newton = "1"
 -> precision = "1.0e-6"
 precision = 1e-06
--> nx = "30"
--> ny = "10"
-going to generate 30x10 grid
+-> nx = "20"
+-> ny = "20"
+going to generate 20x20 grid
 -> output = "polygon.grid"
 -> sigmas = "sigmas.0"
 -> rectangle = "rect.0"
@@ -116,8 +116,7 @@ getting quadrilaterals:
 getting image region corner vertex indices:
 calculating log|ro|:
 solving for sigmas:
-  ............
-  saving sigmas to "sigmas.0":
+  .
 setting new betas:
 calculating image region:
   conformal modulus = 3.4635
@@ -125,7 +124,7 @@ saving image region:
 mapping quadrilaterals (nppe = 3):
   .........
 generating grid:
-  ....................o...ooooo.....................o....ooo.........................o.........................................................o...............................................................................................................................o.............................. (300 nodes)
+  .............o..ooo..............o..oooo.............o...o.o...............ooo.................oo...................o..................................................................................................................................................................................................................................................o...................o.................... (400 nodes)
 ```
 
 4. Note the conformal modulus that `gridgen-c` reports as part of its standard output. In the aboove example output, the conformal modulus is reported as
@@ -138,7 +137,7 @@ At this point the grid locations look like this
 
 ![1st grid](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/1st_grid.png)
 
-5. Edit `gridgen_input.txt` to make sure that `(nx - 1) / (ny - 1) = conformal modulus`. This will generate cells with aspect ratio 1. Using our current `nx = 30` and `ny = 10` values gives `(30-1)/(10-1) = 3.22`. An improved `nx` and `ny` of `nx = 32` and `ny = 10` will give us a ratio of `(32-1)/(10-1) = 3.44` which is close to the reported conformal modulus value reported by `gridgen-c`. 
+5. Edit `gridgen_input.txt` to make sure that `(nx - 1) / (ny - 1) = conformal modulus`. This will generate cells with aspect ratio 1. Using our current `nx = 20` and `ny = 20` values gives `(20-1)/(20-1) = 1.0`. An improved `nx` and `ny` of `nx = 32` and `ny = 10` will give us a ratio of `(32-1)/(10-1) = 3.44` which is close to the reported conformal modulus value reported by `gridgen-c`. 
 
 6. Update the `gridgen-c` input file to include the new `nx` and `ny` values
 
