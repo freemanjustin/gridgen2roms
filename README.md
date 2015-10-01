@@ -22,9 +22,8 @@ Included in the source code package is a basic web browser implemented user inte
 
 ![slicer sample](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/ol_example.png)
 
-Start your polygon by clicking on the map. Subsequent mouse clicks on the map will add control points to the polygon. Points may be moved by dragging and new points can be added in between existing points by clicking.
-
-Double click to finish editing the polygon. Once editing is complete, the list of control point locations will be written underneath the map element. These points represent part of the input required for gridgen-c.
+Start your polygon by clicking on the map. Subsequent mouse clicks on the map will add control points to the polygon.
+Double click to finish editing the polygon. Once editing is complete, the list of control point locations will be written underneath the map element. Points may be moved by dragging and new points can be added in between existing points by clicking. These points represent part of the input required for gridgen-c.
 
 
 # How to make a grid for use with roms
