@@ -18,22 +18,25 @@ First istall the netcdf-c library, followed by gridutils-c then gridgen-c. For u
 To build `gridgen2rom`s you may need to modify the `Makefile` to include your install location of the netcdf library and headers (at runtime you may also need to modify your `$LD_LIBRARY_PATH` as well). To compile `gridgen2roms` type `make` at the top level directory. The binary, `gridgen2roms`, will be placed in the `bin` directory.
 
 ## Extras
-Included in the source code package is a basic web browser hosted user interface that you may use to generate the control points for input to gridgen-c. To use this interface load the `web/app/index.html` page into a web browser. You will be presented with an OpenLayers map on which you can create and modify a polygon describing the outer boundary of the grid that will be created.
+Included in the source code package is a simple, web browser hosted, user interface that you may use to create the control points for input to gridgen-c. To use this interface load the `web/app/index.html` page into a web browser. You will be presented with an OpenLayers map on which you can create and modify a polygon describing the outer boundary of the grid that will be created.
 
-![slicer sample](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/ol_example.png)
+![grid UI sample](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/ol_example.png)
 
 Start your polygon by clicking on the map. Subsequent mouse clicks on the map will add control points to the polygon.
+
 Double click to finish editing the polygon. Once editing is complete, the list of control point locations will be written underneath the map element. Points may be moved by dragging and new points can be added in between existing points by clicking. These points represent part of the input required for `gridgen-c`.
 
 
 # How to make a grid for use with roms via `gridgen2roms`
 This example will take you through the steps requires to generate a grid that may be used with roms.
 
-## Create a list of control points like in the following example.
+## Polygon Definition
+
+First, create a list of control points. Here is an example.
 
 ![sample region](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/example_region.png)
 
-If you are using the web app included in the source distribution then save the output coordinate polygon to a text file. Lets call this file `polygon_points.txt`
+If you are using the web app included in the source distribution then save the output coordinate polygon to a text file. In this example we will save the point list to a file named `polygon_points.txt`
 
 ```
 149.95 -30.3 
@@ -44,10 +47,10 @@ If you are using the web app included in the source distribution then save the o
 148.2 -23.25 
 ```
 
-Note that I have omitted the last coordinate reported by the web app since it is a duplicate.
+*Note* that I have omitted the last coordinate reported by the web app since it is a duplicate.
 
 ## beta values
- We need to add some additional information to the polygon points to include and extra parameter required by `gridgen-c`. This parameter is referred to as `beta` and it defines angles of the polygons corners. The sum of `beta` must always equal 4. For the simple grid defined by the polygon above, we will prescribe the following beta values
+We need to add some additional information to the polygon points to include and extra parameter required by `gridgen-c`. This parameter is referred to as `beta` and it defines angles of the polygons corners. The sum of `beta` must always equal 4. For the simple grid defined by the polygon above, we will prescribe the following beta values
 
 ![beta points](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/beta.png)
 
@@ -62,7 +65,9 @@ Our updated `polygon_points.txt` file now looks like this
 148.2 -23.25 
 ```
 
-## Create a `gridgen-c` input file called `gridgen_input.txt` with the following structure.
+## `gridgen-c` Input
+
+Create a `gridgen-c` input file called `gridgen_input.txt` with the following content.
 
 ```
 input polygon_points.txt
@@ -76,7 +81,9 @@ rectangle rect.0
 newton 1
 ```
 
-## Run `gridgen-v`
+More information about `gridgen-c` is available by running `gridgen -h` on the command line.
+
+## Run gridgen
 
 Run `gridgen -v gridgen_input.txt`. `gridgen-c` should produce the following output:
 
@@ -143,9 +150,10 @@ At this point the grid locations look like this
 
 ![1st grid](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/1st_grid.png)
 
-Edit `gridgen_input.txt` to make sure that `(nx - 1) / (ny - 1) = conformal modulus`. This will generate cells with aspect ratio 1. Using our current `nx = 20` and `ny = 20` values gives `(20-1)/(20-1) = 1.0`. An improved `nx` and `ny` of `nx = 32` and `ny = 10` will give us a ratio of `(32-1)/(10-1) = 3.44` which is close to the reported conformal modulus value reported by `gridgen-c`. 
+Edit `gridgen_input.txt` to make sure that `(nx - 1) / (ny - 1) = conformal modulus`. This will generate cells with aspect ratio 1. Using our current `nx = 20` and `ny = 20` values gives `(20-1)/(20-1) = 1.0`. Using values of `nx = 32` and `ny = 10` will give us a ratio of `(32-1)/(10-1) = 3.44` which is close to the reported conformal modulus value reported by `gridgen-c`. 
 
-## Update the `gridgen-c` input file to include the new `nx` and `ny` values
+## Update the `gridgen-c` input file
+Update the `gridgen-c` input file to include the new `nx` and `ny` values
 ```
 input polygon_points.txt
 output polygon.grid
@@ -158,7 +166,9 @@ rectangle rect.0
 newton 1
 ```
 
-* Re-run `gridgen -v gridgen_input.txt` to update the output grid coordinates with the new `nx` and `ny` values.
+* Re-run gridgen
+Re-run gridgen via `gridgen -v gridgen_input.txt` to update the output grid coordinates with the new `nx` and `ny` values.
+
 ```
 -> input = "polygon_points.txt"
 reading:
@@ -212,12 +222,12 @@ generating grid:
   .....................oo...ooooo.......................o.o..ooo........................o..o............................o...............................o........................................................................................................................................o................................ (320 nodes)
 ```
 
-The resulting grid from `gridgen-c` is
+The resulting grid from `gridgen-c` looks like this:
 
 ![updated grid](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/2nd_grid.png)
 
 ## Make the roms grid
-From the grid node coordinates generated by `gridgen-v` we can now generate a roms grid file. `gridgen2roms` will interpolate bathymetry onto the grid and to do this we require some bathymetry data that covers our target grid region. Bathymetry data sets are available from various sources. In the following example we will use the [ETOPO1  data set](https://www.ngdc.noaa.gov/mgg/global/global.html).
+From the grid node coordinates generated by `gridgen-c` we can now generate a roms grid file. As part of the roms grid generation workflow, `gridgen2roms` will interpolate an input bathymetry onto the output grid. 
 
 First, create an input xml file for `gridgen2roms` with the following contents
 
@@ -232,12 +242,12 @@ First, create an input xml file for `gridgen2roms` with the following contents
     </bathymetry>
 </grid>
 ```
-In the above we have included the bathymetry data set filename as well as some additional information about how the data is arranged in the file such as the latitude and longitude coordinate variable names and the name of the bathymetry variable. The `min_depth` parameter is used by `gridgen2roms` to create land-sea masks.
+In the above we have included a bathymetry data set filename as well as some additional information about how the data is arranged in the file such as the latitude and longitude coordinate variable names and the name of the bathymetry variable. The `min_depth` parameter is used by `gridgen2roms` to create land-sea masks.
 
 ## Run `gridgen2roms`
 Create the roms grid via
 ```
 ./gridgen2roms polygon.grid example.xml roms_grid.nc
 ```
-where `polygon.grid` is the output generated by `gridgen-c`, `exmaple.xml` is the input XML paramter file for `gridgen2roms` and `roms_grid.nc` is the name of the outpur roms grid file created by `gridgen2roms`.
+where `polygon.grid` is the output generated by `gridgen-c`, `exmaple.xml` is the input XML paramter file for `gridgen2roms` and `roms_grid.nc` is the name of the output roms grid file created by `gridgen2roms`.
 
