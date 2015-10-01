@@ -29,7 +29,10 @@ Double click to finish editing the polygon. Once editing is complete, the list o
 # How to make a grid for use with roms via `gridgen2roms`
 This example will take you through the steps requires to generate a grid that may be used with roms.
 
-1. Create a list of control points. If you are using the web app included in the source distribution then save the output coordinate polygon to a text file. Lets call this file `polygon_points.txt`
+1. Create a list of control points like in the following example. 
+![sample region](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/example_region.png)
+
+If you are using the web app included in the source distribution then save the output coordinate polygon to a text file. Lets call this file `polygon_points.txt`
 ```
 149.95 -30.3 
 155.9 -29.1 
@@ -37,9 +40,20 @@ This example will take you through the steps requires to generate a grid that ma
 142.2 -10.3 
 139.05 -14.95 
 148.2 -23.25 
-149.95 -30.3 
 ```
-We need to add some additional information to the polygon points to include and extra parameter required by `gridgen-c`. This parameter is referred to as `beta` and it defines angles of the polygons corners. The sum of `beta` must always equal 4. For the simple grid defined by the polygon above, we will prescribe the following beta values:
+Note that I have omitted the last coordinate reported by the web app since it is a duplicate.
+
+We need to add some additional information to the polygon points to include and extra parameter required by `gridgen-c`. This parameter is referred to as `beta` and it defines angles of the polygons corners. The sum of `beta` must always equal 4. For the simple grid defined by the polygon above, we will prescribe the following beta values
+![beta points](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/beta.png)
+Our updated `polygon_points.txt` file now looks like this
+```
+149.95 -30.3 1
+155.9 -29.1 1
+153.45 -18.15 
+142.2 -10.3 1
+139.05 -14.95 1
+148.2 -23.25 
+```
 
 2. Create a `gridgen-c` input file called `gridgen_input.txt` with the following structure.
 ```
