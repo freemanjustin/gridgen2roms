@@ -20,6 +20,8 @@ To build gridgen2roms you may need to modify the Makefile to include your instal
 ## Extras
 Included in the source code package is a basic web browser implemented user interface that you may use to generate the control points for input to gridgen-c. To use this interface load the index.html page into a web browser. You will be presented with an OpenLayers map on which you can create and modify a polygon describing the outer boundary of the grid that will be created.
 
+![slicer sample](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/ol_example.png)
+
 Start your polygon by clicking on the map. Subsequent mouse clicks on the map will add control points to the polygon. Points may be moved by dragging and new points can be added in between existing points by clicking.
 
 Double click to finish editing the polygon. Once editing is complete, the list of control point locations will be written underneath the map element. These points represent part of the input required for gridgen-c.
