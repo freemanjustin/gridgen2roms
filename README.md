@@ -134,7 +134,81 @@ generating grid:
  conformal modulus = 3.4635
 ```
 
+At this point the grid locations look like this
 
-5. Edit `gridgen_input.txt` to make sure that `(nx - 1) / (ny - 1) = conformal modulus`. This will generate cells with aspect ratio 1.
-6. Re-run `gridgen -v gridgen_input.txt` to update the output with the new `nx` and `ny` values.
+![1st grid](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/1st_grid.png)
 
+5. Edit `gridgen_input.txt` to make sure that `(nx - 1) / (ny - 1) = conformal modulus`. This will generate cells with aspect ratio 1. Using our current `nx = 30` and `ny = 10` values gives `(30-1)/(10-1) = 3.22`. An improved `nx` and `ny` of `nx = 32` and `ny = 10` will give us a ratio of `(32-1)/(10-1) = 3.44` which is close to the reported conformal modulus value reported by `gridgen-c`. 
+
+6. Update the `gridgen-c` input file to include the new `nx` and `ny` values
+
+```
+input polygon_points.txt
+output polygon.grid
+nnodes 14
+nx 32
+ny 10
+precision 1.0e-6
+sigmas sigmas.0
+rectangle rect.0
+newton 1
+```
+
+
+7. Re-run `gridgen -v gridgen_input.txt` to update the output grid coordinates with the new `nx` and `ny` values.
+```
+-> input = "polygon_points.txt"
+reading:
+  6 vertices after read
+  counterclockwise ok
+thinning:
+  6 vertices after thinning
+checking for self-intersections:
+-> nnodes = "14"
+nnodes = 14
+-> newton = "1"
+-> precision = "1.0e-6"
+precision = 1e-06
+-> nx = "32"
+-> ny = "10"
+going to generate 32x10 grid
+-> output = "polygon.grid"
+-> sigmas = "sigmas.0"
+-> rectangle = "rect.0"
+getting marked vertices:
+  image region: 4 corners
+triangulating:
+  4 triangles
+  9 edges
+phase 1 split:
+  6 vertices after phase 1 split
+triangulating:
+  4 triangles
+  9 edges
+phase 2 split:
+  .
+  6 vertices after phase 2 split
+triangulating:
+  4 triangles
+  9 edges
+calculating betas:
+checking input:
+getting quadrilaterals:
+  3 diagonals
+getting image region corner vertex indices:
+calculating log|ro|:
+solving for sigmas:
+  .
+setting new betas:
+calculating image region:
+  conformal modulus = 3.4635
+saving image region:
+mapping quadrilaterals (nppe = 3):
+  .........
+generating grid:
+  .....................oo...ooooo.......................o.o..ooo........................o..o............................o...............................o........................................................................................................................................o................................ (320 nodes)
+```
+
+The resulting grid from `gridgen-c` is
+
+![updated grid](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/2nd_grid.png)
