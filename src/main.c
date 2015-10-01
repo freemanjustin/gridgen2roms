@@ -69,7 +69,7 @@ int main(int argc,char **argv)
             //E->y_rho[i][j] = E->y[i];
 			fgets( str, 240, gridgen_input );
 			sscanf(str,"%lf %lf", &E->lon_rho[i][j], &E->lat_rho[i][j]);
-			E->lon_rho[i][j]+=360.0;
+			//E->lon_rho[i][j]+=360.0;
 			//printf("%s, lon_rho = %f, lat_rho = %f\n",str, E->lon_rho[i][j], E->lat_rho[i][j]);
         }
     }
