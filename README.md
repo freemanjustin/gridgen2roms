@@ -30,6 +30,17 @@ Double click to finish editing the polygon. Once editing is complete, the list o
 This example will take you through the steps requires to generate a grid that may be used with roms.
 
 1. Create a list of control points. If you are using the web app included in the source distribution then save the output coordinate polygon to a text file. Lets call this file `polygon_points.txt`
+```
+149.95 -30.3 
+155.9 -29.1 
+153.45 -18.15 
+142.2 -10.3 
+139.05 -14.95 
+148.2 -23.25 
+149.95 -30.3 
+```
+We need to add some additional information to the polygon points to include and extra parameter required by `gridgen-c`. This parameter is referred to as `beta` and it defines angles of the polygons corners. The sum of `beta` must always equal 4. For the simple grid defined by the polygon above, we will prescribe the following beta values:
+
 2. Create a `gridgen-c` input file called `gridgen_input.txt` with the following structure.
 ```
 input polygon_points.txt
