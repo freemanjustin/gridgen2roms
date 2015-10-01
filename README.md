@@ -29,7 +29,8 @@ Double click to finish editing the polygon. Once editing is complete, the list o
 # How to make a grid for use with roms via `gridgen2roms`
 This example will take you through the steps requires to generate a grid that may be used with roms.
 
-1. Create a list of control points like in the following example. 
+1. Create a list of control points like in the following example.
+
 ![sample region](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/example_region.png)
 
 If you are using the web app included in the source distribution then save the output coordinate polygon to a text file. Lets call this file `polygon_points.txt`
@@ -41,11 +42,15 @@ If you are using the web app included in the source distribution then save the o
 139.05 -14.95 
 148.2 -23.25 
 ```
+
 Note that I have omitted the last coordinate reported by the web app since it is a duplicate.
 
 We need to add some additional information to the polygon points to include and extra parameter required by `gridgen-c`. This parameter is referred to as `beta` and it defines angles of the polygons corners. The sum of `beta` must always equal 4. For the simple grid defined by the polygon above, we will prescribe the following beta values
+
 ![beta points](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/beta.png)
+
 Our updated `polygon_points.txt` file now looks like this
+
 ```
 149.95 -30.3 1
 155.9 -29.1 1
@@ -60,15 +65,76 @@ Our updated `polygon_points.txt` file now looks like this
 input polygon_points.txt
 output polygon.grid
 nnodes 14
-nx 300
-ny 36
+nx 30
+ny 10
 precision 1.0e-6
 sigmas sigmas.0
 rectangle rect.0
 newton 1
 ```
-3. Run `gridgen -v gridgen_input.txt`
-4. Note the conformal modulus that `gridgen-c` reports as part of its standard output.
+3. Run `gridgen -v gridgen_input.txt`. `gridgen-c` should produce the following output:
+
+```
+-> input = "polygon_points.txt"
+reading:
+  6 vertices after read
+  counterclockwise ok
+thinning:
+  6 vertices after thinning
+checking for self-intersections:
+-> nnodes = "14"
+nnodes = 14
+-> newton = "1"
+-> precision = "1.0e-6"
+precision = 1e-06
+-> nx = "30"
+-> ny = "10"
+going to generate 30x10 grid
+-> output = "polygon.grid"
+-> sigmas = "sigmas.0"
+-> rectangle = "rect.0"
+getting marked vertices:
+  image region: 4 corners
+triangulating:
+  4 triangles
+  9 edges
+phase 1 split:
+  6 vertices after phase 1 split
+triangulating:
+  4 triangles
+  9 edges
+phase 2 split:
+  .
+  6 vertices after phase 2 split
+triangulating:
+  4 triangles
+  9 edges
+calculating betas:
+checking input:
+getting quadrilaterals:
+  3 diagonals
+getting image region corner vertex indices:
+calculating log|ro|:
+solving for sigmas:
+  ............
+  saving sigmas to "sigmas.0":
+setting new betas:
+calculating image region:
+  conformal modulus = 3.4635
+saving image region:
+mapping quadrilaterals (nppe = 3):
+  .........
+generating grid:
+  ....................o...ooooo.....................o....ooo.........................o.........................................................o...............................................................................................................................o.............................. (300 nodes)
+```
+
+4. Note the conformal modulus that `gridgen-c` reports as part of its standard output. In the aboove example output, the conformal modulus is reported as
+
+```
+ conformal modulus = 3.4635
+```
+
+
 5. Edit `gridgen_input.txt` to make sure that `(nx - 1) / (ny - 1) = conformal modulus`. This will generate cells with aspect ratio 1.
 6. Re-run `gridgen -v gridgen_input.txt` to update the output with the new `nx` and `ny` values.
-7. 
+
