@@ -27,7 +27,7 @@ Start your polygon by clicking on the map. Subsequent mouse clicks on the map wi
 Double click to finish editing the polygon. Once editing is complete, the list of control point locations will be written underneath the map element. Points may be moved by dragging and new points can be added in between existing points by clicking. These points represent part of the input required for `gridgen-c`.
 
 
-# How to make a grid for use with roms via `gridgen2roms`
+# How to make a roms grid with `gridgen2roms`
 This example will take you through the steps requires to generate a grid that may be used with roms.
 
 ## Polygon Definition
