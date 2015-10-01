@@ -146,7 +146,7 @@ Note the conformal modulus that `gridgen-c` reports as part of its standard outp
 ```
  conformal modulus = 3.4635
 ```
-At this point the grid locations look like this
+At this point the grid look like this:
 
 ![1st grid](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/1st_grid.png)
 
@@ -166,7 +166,6 @@ rectangle rect.0
 newton 1
 ```
 
-* Re-run gridgen
 Re-run gridgen via `gridgen -v gridgen_input.txt` to update the output grid coordinates with the new `nx` and `ny` values.
 
 ```
