@@ -28,7 +28,7 @@ COBJ=	$(CSRC)main.o \
 
 OBJ=	$(COBJ) 
 
-EXEC=	./bin/2roms
+EXEC=	./bin/gridgen2roms
 
 $(EXEC):$(OBJ)
 	$(CC) $(CFLAGS) -o $(EXEC) $(OBJ) $(LFLAGS)
