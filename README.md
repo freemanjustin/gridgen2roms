@@ -30,8 +30,11 @@ Double click to finish editing the polygon. Once editing is complete, the list o
 This example will take you through the steps requires to generate a grid that may be used with roms.
 
 * Create a list of control points like in the following example.
+
 ![sample region](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/example_region.png)
+
 If you are using the web app included in the source distribution then save the output coordinate polygon to a text file. Lets call this file `polygon_points.txt`
+
 ```
 149.95 -30.3 
 155.9 -29.1 
@@ -40,11 +43,15 @@ If you are using the web app included in the source distribution then save the o
 139.05 -14.95 
 148.2 -23.25 
 ```
+
 Note that I have omitted the last coordinate reported by the web app since it is a duplicate.
 
 * We need to add some additional information to the polygon points to include and extra parameter required by `gridgen-c`. This parameter is referred to as `beta` and it defines angles of the polygons corners. The sum of `beta` must always equal 4. For the simple grid defined by the polygon above, we will prescribe the following beta values
+
 ![beta points](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/beta.png)
+
 Our updated `polygon_points.txt` file now looks like this
+
 ```
 149.95 -30.3 1
 155.9 -29.1 1
@@ -128,6 +135,7 @@ generating grid:
  conformal modulus = 3.4635
 ```
 At this point the grid locations look like this
+
 ![1st grid](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/1st_grid.png)
 
 * Edit `gridgen_input.txt` to make sure that `(nx - 1) / (ny - 1) = conformal modulus`. This will generate cells with aspect ratio 1. Using our current `nx = 20` and `ny = 20` values gives `(20-1)/(20-1) = 1.0`. An improved `nx` and `ny` of `nx = 32` and `ny = 10` will give us a ratio of `(32-1)/(10-1) = 3.44` which is close to the reported conformal modulus value reported by `gridgen-c`. 
@@ -198,5 +206,7 @@ mapping quadrilaterals (nppe = 3):
 generating grid:
   .....................oo...ooooo.......................o.o..ooo........................o..o............................o...............................o........................................................................................................................................o................................ (320 nodes)
 ```
+
 The resulting grid from `gridgen-c` is
+
 ![updated grid](https://raw.github.com/freemanjustin/gridgen2roms/master/docs/2nd_grid.png)
