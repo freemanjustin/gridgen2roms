@@ -73,8 +73,9 @@ function outputFeaturescoords(clear) {
 
 	for (k in coords) {
 	    for (coord in coords[k]) {
-		coords[k][coord] = ol.proj.transform([coords[k][coord][0], coords[k][coord][1]], 'EPSG:3857', 'EPSG:4326');
-		str += round(coords[k][coord][0],2)+360.0+" "+round(coords[k][coord][1],2)+"  <br/>";
+		//coords[k][coord] = ol.proj.transform([coords[k][coord][0], coords[k][coord][1]], 'EPSG:3857', 'EPSG:4326');
+		coords[k][coord] = ([coords[k][coord][0], coords[k][coord][1]]);
+                str += round(coords[k][coord][0],2)+" "+round(coords[k][coord][1],2)+"  <br/>";
 	    }
 	}
 	str += "================<br/>";
@@ -90,8 +91,9 @@ function output_coords(event) {
 
     for (k in coords) {
 	for (coord in coords[k]) {
-	    coords[k][coord] = ol.proj.transform([coords[k][coord][0], coords[k][coord][1]], 'EPSG:3857', 'EPSG:4326');
-	    str += round(coords[k][coord][0],2)+360.0+" "+round(coords[k][coord][1],2)+" <br/>";
+	    //coords[k][coord] = ol.proj.transform([coords[k][coord][0], coords[k][coord][1]], 'EPSG:3857', 'EPSG:4326');
+	    coords[k][coord] = ([coords[k][coord][0], coords[k][coord][1]]);
+            str += round(coords[k][coord][0],2)+" "+round(coords[k][coord][1],2)+" <br/>";
 	}
 	str += "================<br/>";
     }

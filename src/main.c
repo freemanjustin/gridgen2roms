@@ -5,6 +5,87 @@
 
 #include "grid.h"
 
+
+void reproject(e *E){
+    
+    // have EPSG:3857
+    // want EPSG:4326
+    
+    // using equations from pg 39 of
+    //http://www.ogp.org.uk/pubs/373-07-2.pdf
+    
+    /*
+     
+     1.3.3.1 Mercator (Spherical)
+     (EPSG Dataset coordinate operation method code 1026)
+     The formulas to derive projected Easting and Northing coordinates from latitude phi and longitude lambda using a
+     sphere rather than ellipsoid as model of the earth are:
+     E = FE + R (lambda – lambdaO)
+     N = FN + R ln[tan(pi/4 + phi/2)]
+     where lambdaO is the longitude of natural origin and FE and FN are false easting and false nothing.
+     R is the radius of the sphere and will normally be one of the CRS parameters. If the figure of the earth used
+     is an ellipsoid rather than a sphere then R should be calculated as the radius of the conformal sphere at the
+     projection origin at latitude phiO using the formula for RC given in section 1.2, table 3. Note however that if
+     applying spherical formula to ellipsoidal coordinates, the projection properties are not preserved.
+     If latitude phi = 90 degrees, N is infinite. The above formula for N will fail near to the pole, and should not be used
+     poleward of 88 degrees.
+     The reverse formulas to derive latitude and longitude on the sphere from E and N values are:
+     D = – (N – FN) / R = (FN – N) / R
+     phi = pi/2 – 2 atan(eD) where e=base of natural logarithms, 2.7182818…
+     lambda = [(E – FE)/R] + lambdaO
+     Note that in these formulas, the parameter latitude of natural origin (ϕO) is not used. However for the
+     Merctor (Spherical) method, for completeness in CRS labelling the EPSG Dataset includes this parameter,
+     which must have a value of zero.
+     
+     */
+    
+    double  East, FE, R;
+    double  lambda, lambda0;
+    double  N, FN;
+    double  phi, phi0;
+    double  D;
+    
+    int i,j;
+    
+    
+    East = -11156569.90; // m
+    N = 2796869.94; // m
+    R = 6371007.0; // metres
+    
+    lambda0 = 0.0; // radians
+    phi0 = 0.0; // radians
+    
+    FE = 0.0; // metres
+    FN = 0.0; // metres
+    
+    // first get D
+    // D = – (N – FN) / R = (FN – N) / R
+    
+    //E = FE + R (lambda – lambdaO);
+    //N = FN + R ln[tan(pi/4 + phi/2)];
+    D = (FN - N)/R;
+    //printf("D = %f\n", D);
+    
+    phi = M_PI/2.0 - 2.0 * atan(exp(D));
+    //printf("phi = %f (%f) \n", phi*180.0/M_PI, phi);
+    
+    lambda = ((East - FE)/R) + lambda0;
+    //printf("lambda= %f (%f) \n", lambda*180.0/M_PI, lambda);
+    
+    
+    for(i=0;i<=E->g.nY;i++){
+        for(j=0;j<E->g.nX;j++){
+            D = (FN - E->lat_rho[i][j])/R;
+            phi = M_PI/2.0 - 2.0 * atan(exp(D));
+            lambda = ((E->lon_rho[i][j] - FE)/R) + lambda0;
+            
+            E->lat_rho[i][j] = phi*180/M_PI;
+            E->lon_rho[i][j] = lambda*180.0/M_PI + 360.0;
+        }
+    }
+    
+}
+
 int main(int argc,char **argv)
 {
 	e	*E;
@@ -75,6 +156,11 @@ int main(int argc,char **argv)
     }
 
 	fclose(gridgen_input);
+    
+    
+    // transform points from EPSG:3857 to EPSG:4326
+    reproject(E);
+    
 
     free(E->Rx_rho);
     free(E->Ry_rho);
