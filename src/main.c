@@ -159,7 +159,7 @@ int main(int argc,char **argv)
     
     
     // transform points from EPSG:3857 to EPSG:4326
-    reproject(E);
+    //reproject(E);
     
 
     free(E->Rx_rho);
