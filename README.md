@@ -45,6 +45,7 @@ If you are using the web app included in the source distribution then save the o
 142.2 -10.3 
 139.05 -14.95 
 148.2 -23.25 
+geographic 148 -20
 ```
 
 **Note** that I have omitted the last coordinate reported by the web app since it is a duplicate.
@@ -72,13 +73,10 @@ Create a `gridgen-c` input file called `gridgen_input.txt` with the following co
 ```
 input polygon_points.txt
 output polygon.grid
-nnodes 14
 nx 20
 ny 20
-precision 1.0e-6
-sigmas sigmas.0
-rectangle rect.0
 newton 1
+geographic 148 -20
 ```
 
 More information about `gridgen-c` is available by running `gridgen -h` on the command line.
@@ -157,13 +155,10 @@ Update the `gridgen-c` input file to include the new `nx` and `ny` values
 ```
 input polygon_points.txt
 output polygon.grid
-nnodes 14
 nx 32
 ny 10
-precision 1.0e-6
-sigmas sigmas.0
-rectangle rect.0
 newton 1
+geographic 148 -20
 ```
 
 Re-run gridgen via `gridgen -v gridgen_input.txt` to update the output grid coordinates with the new `nx` and `ny` values.
