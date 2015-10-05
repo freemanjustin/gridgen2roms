@@ -71,16 +71,55 @@ function outputFeaturescoords(clear) {
 	var coords = fts[i].getGeometry().getCoordinates();
 
 
-	for (k in coords) {
+	  for (k in coords) {
 	    for (coord in coords[k]) {
-		coords[k][coord] = ol.proj.transform([coords[k][coord][0], coords[k][coord][1]], 'EPSG:3857', 'EPSG:4326');
+		  coords[k][coord] = ol.proj.transform([coords[k][coord][0], coords[k][coord][1]], 'EPSG:3857', 'EPSG:4326');
                 str += round(coords[k][coord][0],2)+360.0+" "+round(coords[k][coord][1],2)+"  <br/>";
 	    }
-	}
-	str += "================<br/>";
+	  }
+      var centroid = {};
+      centroid.x = 0.0;
+      centroid.y = 0.0;
+
+      var signedArea = 0.0;
+      var x0 = 0.0; // Current vertex X
+      var y0 = 0.0; // Current vertex Y
+      var x1 = 0.0; // Next vertex X
+      var y1 = 0.0; // Next vertex Y
+      var a = 0.0;  // Partial signed area
+
+      // For all vertices
+      var i=0;
+      console.log(coords.length)
+      for (k in coords) {
+          for(coord=0; coord < coords[k].length - 1; coord++){
+
+              x0 = round(coords[k][coord][0],2)+360.0;
+              y0 = round(coords[k][coord][1],2);
+
+              x1 = round(coords[k][coord+1][0],2)+360.0;
+              y1 = round(coords[k][coord+1][1],2);
+
+              a = x0*y1 - x1*y0;
+              signedArea += a;
+              centroid.x += (x0 + x1)*a;
+              centroid.y += (y0 + y1)*a;
+  	  }
+      }
+
+      signedArea *= 0.5;
+      centroid.x /= (6.0*signedArea);
+      centroid.y /= (6.0*signedArea);
+
+
+      str += " geographic " + centroid.x + " " + centroid.y + "<br>";
+      str += "================<br/>";
+      //$("#feature_coords").html(str);
     }
     $("#feature_coords").html(str);
 }
+
+
 function output_coords(event) {
     var str = "";
 
@@ -89,12 +128,49 @@ function output_coords(event) {
     console.info(coords);
 
     for (k in coords) {
-	for (coord in coords[k]) {
+	  for (coord in coords[k]) {
 	    coords[k][coord] = ol.proj.transform([coords[k][coord][0], coords[k][coord][1]], 'EPSG:3857', 'EPSG:4326');
             str += round(coords[k][coord][0],2)+360.0+" "+round(coords[k][coord][1],2)+" <br/>";
-	}
-	str += "================<br/>";
+	  }
     }
+
+    var centroid = {};
+    centroid.x = 0.0;
+    centroid.y = 0.0;
+
+    var signedArea = 0.0;
+    var x0 = 0.0; // Current vertex X
+    var y0 = 0.0; // Current vertex Y
+    var x1 = 0.0; // Next vertex X
+    var y1 = 0.0; // Next vertex Y
+    var a = 0.0;  // Partial signed area
+
+    // For all vertices
+    var i=0;
+    console.log(coords.length)
+    for (k in coords) {
+        for(coord=0; coord < coords[k].length - 1; coord++){
+
+            x0 = round(coords[k][coord][0],2)+360.0;
+            y0 = round(coords[k][coord][1],2);
+
+            x1 = round(coords[k][coord+1][0],2)+360.0;
+            y1 = round(coords[k][coord+1][1],2);
+
+            a = x0*y1 - x1*y0;
+            signedArea += a;
+            centroid.x += (x0 + x1)*a;
+            centroid.y += (y0 + y1)*a;
+	  }
+    }
+
+    signedArea *= 0.5;
+    centroid.x /= (6.0*signedArea);
+    centroid.y /= (6.0*signedArea);
+
+
+    str += " geographic " + centroid.x + " " + centroid.y + "<br>";
+    str += "================<br/>";
     $("#feature_coords").html(str);
 }
 
