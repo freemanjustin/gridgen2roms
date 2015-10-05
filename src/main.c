@@ -80,7 +80,7 @@ void reproject(e *E){
             lambda = ((E->lon_rho[i][j] - FE)/R) + lambda0;
             
             E->lat_rho[i][j] = phi*180/M_PI;
-            E->lon_rho[i][j] = lambda*180.0/M_PI + 360.0;
+            E->lon_rho[i][j] = lambda*180.0/M_PI;
         }
     }
     
