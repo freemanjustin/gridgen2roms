@@ -45,7 +45,6 @@ If you are using the web app included in the source distribution then save the o
 142.2 -10.3 
 139.05 -14.95 
 148.2 -23.25 
-geographic 148 -20
 ```
 
 **Note** that I have omitted the last coordinate reported by the web app since it is a duplicate.
