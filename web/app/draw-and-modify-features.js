@@ -3,13 +3,27 @@ var raster = new ol.layer.Tile({
 });
 
 var map = new ol.Map({
+    controls: ol.control.defaults({
+                attributionOptions: ({
+                    collapsible: true
+                })
+            }).extend([
+                new ol.control.MousePosition({
+                    coordinateFormat: ol.coordinate.createStringXY(4),
+                    projection: 'EPSG:4326'
+                    //projection: 'EPSG:3857'
+                })
+            ]),
     layers: [raster],
     target: 'map',
     view: new ol.View({
-	center: [-25242564.2, -2856910.35],
+	center: [15419488.84, -2856910.35],
 	zoom: 3
     })
 });
+
+
+
 
 var features = new ol.Collection();
 var featureOverlay = new ol.layer.Vector({
@@ -74,7 +88,7 @@ function outputFeaturescoords(clear) {
 	  for (k in coords) {
 	    for (coord in coords[k]) {
 		  coords[k][coord] = ol.proj.transform([coords[k][coord][0], coords[k][coord][1]], 'EPSG:3857', 'EPSG:4326');
-                str += round(coords[k][coord][0],2)+360.0+" "+round(coords[k][coord][1],2)+"  <br/>";
+                str += round(coords[k][coord][0],2)+" "+round(coords[k][coord][1],2)+"  <br/>";
 	    }
 	  }
       var centroid = {};
@@ -94,10 +108,10 @@ function outputFeaturescoords(clear) {
       for (k in coords) {
           for(coord=0; coord < coords[k].length - 1; coord++){
 
-              x0 = round(coords[k][coord][0],2)+360.0;
+              x0 = round(coords[k][coord][0],2);
               y0 = round(coords[k][coord][1],2);
 
-              x1 = round(coords[k][coord+1][0],2)+360.0;
+              x1 = round(coords[k][coord+1][0],2);
               y1 = round(coords[k][coord+1][1],2);
 
               a = x0*y1 - x1*y0;
@@ -130,7 +144,7 @@ function output_coords(event) {
     for (k in coords) {
 	  for (coord in coords[k]) {
 	    coords[k][coord] = ol.proj.transform([coords[k][coord][0], coords[k][coord][1]], 'EPSG:3857', 'EPSG:4326');
-            str += round(coords[k][coord][0],2)+360.0+" "+round(coords[k][coord][1],2)+" <br/>";
+            str += round(coords[k][coord][0],2)+" "+round(coords[k][coord][1],2)+" <br/>";
 	  }
     }
 
@@ -151,10 +165,10 @@ function output_coords(event) {
     for (k in coords) {
         for(coord=0; coord < coords[k].length - 1; coord++){
 
-            x0 = round(coords[k][coord][0],2)+360.0;
+            x0 = round(coords[k][coord][0],2);
             y0 = round(coords[k][coord][1],2);
 
-            x1 = round(coords[k][coord+1][0],2)+360.0;
+            x1 = round(coords[k][coord+1][0],2);
             y1 = round(coords[k][coord+1][1],2);
 
             a = x0*y1 - x1*y0;

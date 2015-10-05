@@ -58,6 +58,12 @@ ol.inline>li {
 .ol-control button, .ol-attribution, .ol-scale-line-inner {
   font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
 }
+.ol-mouse-position {
+            top: 1em;
+            bottom: auto;
+            color: white;
+            font-weight: bold;
+}
 
 pre[class*="language-"] {
   margin-top: 20px;
