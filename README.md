@@ -7,7 +7,7 @@ ROMS grid generation via `gridgen`.
 `gridgen2roms` requires the following packages, libraries and data:
 
 * [netCDF-C](http://www.unidata.ucar.edu/software/netcdf/)
-* [gridgen-c](https://github.com/sakov/gridgen-c)
+* [gridgen-c](https://github.com/sakov/gridgen-c) >= v. 1.51.0
 * [gridutils-c](https://github.com/sakov/gridutils-c)
 * [libXML2](http://www.xmlsoft.org/)
 * Bathymetry data in netcdf format 
