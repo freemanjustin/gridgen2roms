@@ -177,27 +177,10 @@ int main(int argc,char **argv)
         }
     }
 
-
-
-
     free(E->Rx_u);
     free(E->Ry_u);
     free(E->x_u);
     free(E->y_u);
-
-
-    // Calculate angle variable - angle at rho points
-    for(i=0;i<E->g.nY-1;i++){
-          for(j=0;j<E->g.nX;j++){
-
-            E->angle[i][j] = bearing(E->lat_rho[i][j],E->lon_rho[i+1][j],E->lat_rho[i+1][j], E->lon_rho[i][j] );
-
-        }
-    }
-	// fill in the last column
-	for(j=0;j<E->g.nX;j++){
-		E->angle[E->g.nY-1][j] = E->angle[E->g.nY-2][j];
-	}
 
     // V GRID
     // Create non-georeferenced grid in meters (origin = 0,0)
@@ -208,8 +191,6 @@ int main(int argc,char **argv)
             E->lat_v[i][j] = 0.5*(E->lat_rho[i][j]+E->lat_rho[i+1][j]);
         }
     }
-
-
 
     free(E->Rx_v);
     free(E->Ry_v);
@@ -236,6 +217,18 @@ int main(int argc,char **argv)
 
 
     // Grid spacing and other grid parameters
+
+    // Calculate angle variable - angle at rho points
+    for(i=0;i<E->g.nY;i++){
+          for(j=0;j<E->g.nX;j++){
+            E->angle[i][j] = bearing(E->lat_rho[i][j+1],E->lon_rho[i][j+1],E->lat_rho[i][j], E->lon_rho[i][j] );
+        }
+    }
+    // calculate angle for last column using backward difference
+    for(i=0;i<E->g.nY;i++){
+        E->angle[i][E->g.nX-1] = bearing(E->lat_rho[i][E->g.nX-1],E->lon_rho[i][E->g.nX-1],E->lat_rho[i][E->g.nX-2], E->lon_rho[i][E->g.nX-2] );
+    }
+
 
     el = E->lat_u[E->g.nY-1][0] - E->lat_u[0][0];
     xl = E->lon_v[0][E->g.nX-1] - E->lon_v[0][0];
