@@ -98,19 +98,19 @@ double distance(double lat1, double lon1, double lat2, double lon2){
 double bearing(double lat1, double lon1, double lat2, double lon2){
     
     double delta_lon, delta_lat;
-	double dep, angle;
+    double dep, angle;
     
     double complex z;
     
     lat1 *= M_PI/180.0;
-	lon1 *= M_PI/180.0;
-	lat2 *= M_PI/180.0;
-	lon2 *= M_PI/180.0;
+    lon1 *= M_PI/180.0;
+    lat2 *= M_PI/180.0;
+    lon2 *= M_PI/180.0;
     
     
     delta_lat = lat1 - lat2;
-	delta_lon = fabs(lon1 - lon2);
-	if (delta_lon > 2.0*M_PI) delta_lon = (2.0*M_PI) - delta_lon;
+    delta_lon = lon1 - lon2;
+    if (delta_lon > 2.0*M_PI) delta_lon = (2.0*M_PI) - delta_lon;
     
     dep    = cos( 0.5*(lat2+lat1) ) * delta_lon;
     z = dep+delta_lat*I;
