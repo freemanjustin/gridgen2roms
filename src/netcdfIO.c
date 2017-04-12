@@ -133,7 +133,12 @@ void defvars(e *E){
 	defvar_netcdf(E, E->ncid, "h", NC_DOUBLE, 2, &E->dimIdsRho[0], &E->vid_h);	
     add_txt_attribute_netcdf(E, E->ncid, E->vid_h, "long_name", "bathmetry at RHO-points");
 	add_txt_attribute_netcdf(E, E->ncid, E->vid_h, "units", "m");
-    
+   
+    defvar_netcdf(E, E->ncid, "bathymetry", NC_DOUBLE, 2, &E->dimIdsRho[0], &E->vid_bathymetry);
+    add_txt_attribute_netcdf(E, E->ncid, E->vid_bathymetry, "long_name", "original bathmetry at RHO-points");
+        add_txt_attribute_netcdf(E, E->ncid, E->vid_bathymetry, "units", "m");
+
+ 
 	defvar_netcdf(E, E->ncid, "lat_rho", NC_DOUBLE, 2, E->dimIdsRho, &E->vid_lat_rho);	
     add_txt_attribute_netcdf(E, E->ncid, E->vid_lat_rho, "long_name", "latitude at RHO-points");
 	add_txt_attribute_netcdf(E, E->ncid, E->vid_lat_rho, "units", "degree_north");
@@ -301,7 +306,9 @@ void write_data(e *E){
     // write h
     if ((E->retval = nc_put_var_double(E->ncid, E->vid_h, &E->h[0][0])))
         fail("put_var_ failed. Error code = %d\n",E->retval);
-    
+   // write bathymetry
+    if ((E->retval = nc_put_var_double(E->ncid, E->vid_bathymetry, &E->bathymetry[0][0])))
+        fail("put_var_ failed. Error code = %d\n",E->retval); 
     
     // lat_rho
     if ((E->retval = nc_put_var_double(E->ncid, E->vid_lat_rho, &E->lat_rho[0][0])))

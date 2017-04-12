@@ -226,7 +226,11 @@ int main(int argc,char **argv)
     }
     // calculate angle for last column using backward difference
     for(i=0;i<E->g.nY;i++){
-        E->angle[i][E->g.nX-1] = bearing(E->lat_rho[i][E->g.nX-1],E->lon_rho[i][E->g.nX-1],E->lat_rho[i][E->g.nX-2], E->lon_rho[i][E->g.nX-2] );
+        //E->angle[i][E->g.nX-1] = bearing(E->lat_rho[i][E->g.nX-1],E->lon_rho[i][E->g.nX-1],E->lat_rho[i][E->g.nX-2], E->lon_rho[i][E->g.nX-2] );
+        
+	// make the last angle equal to the previous one....
+        E->angle[i][E->g.nX-1] = E->angle[i][E->g.nX-2];	
+
     }
 
 
@@ -291,6 +295,15 @@ int main(int argc,char **argv)
     free(E->b.field);
     free(E->b.lon);
     free(E->b.lat);
+
+
+    // store bathymetry for writing
+    for(i=0;i<E->g.nY;i++){
+        for(j=0;j<E->g.nX;j++){
+            E->bathymetry[i][j] = E->h[i][j];
+        }
+    }
+
 
     // generate land sea mask
     // 0 == land

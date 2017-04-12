@@ -57,6 +57,7 @@ void malloc_arrays(e *E){
     
     E->f =  malloc2d_double(E->g.nY, E->g.nX);
     E->h =  malloc2d_double(E->g.nY, E->g.nX);
+    E->bathymetry = malloc2d_double(E->g.nY, E->g.nX);
     
     E->mask_rho = malloc2d_double(E->g.nY, E->g.nX);
     E->mask_u = malloc2d_double(E->g.nY, E->g.nX-1);
